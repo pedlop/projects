@@ -1,0 +1,120 @@
+<html>
+<header>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 5em;
+        }
+
+        .content {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 3em;
+        }
+
+        .circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: royalblue;
+            border-radius: 100%;
+        }
+
+        .triangle-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0%;
+            left: 0%;
+            transform: rotate(54deg);
+            /* we have 405 degrees, because our moon starts at -45º */
+        }
+
+        .triangle {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+        }
+
+        #triangle {
+            transition: 0.3s;
+            border-style: solid;
+            width: 0px;
+            height: 0px;
+            line-height: 0px;
+            transform: rotate(135deg);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .actions {
+            display: flex;
+        }
+
+        input:not(:last-child) {
+            margin-right: 2em;
+        }
+    </style>
+</header>
+
+<body>
+    <div class="content">
+        <div class="circle"></div>
+        <div class="triangle-content">
+            <!-- <div class="triangle"></div> -->
+            <div id="triangle"
+                style="border-color: transparent transparent rgb(0, 176, 79); border-width: 0 5px 10px 5px;">
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <input type="button" name="start" value="Start" />
+        <input type="button" name="stop" value="Stop" />
+        <input type="button" name="reset" value="Reset" />
+    </div>
+    <script>
+        const watch = {};
+        let degrees = 10;
+        let timer;
+        let active = false;
+
+        watch.start = () => {
+            if (active) return;
+            timer = setInterval(runningTime, 1000);
+        }
+
+        watch.stop = () => {
+            clearInterval(timer);
+            active = false;
+        }
+
+        watch.reset = () => {
+            watch.stop();
+            active = false;
+            degrees = 9;
+            setArrowPosition();
+        }
+
+        ['start', 'stop', 'reset'].forEach(type => {
+            const input = document.querySelector(`input[name=${type}]`);
+            input.addEventListener('click', watch[type])
+        });
+
+        runningTime = () => {
+            const d = new Date();
+            setArrowPosition();
+        }
+
+        setArrowPosition = () => {
+            document.querySelector('.triangle-content').style.transform = `rotate(${degrees * 6}deg)`;
+            degrees++;
+        } 
+    </script>
+</body>
+
+</html>
