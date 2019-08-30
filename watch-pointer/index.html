@@ -30,7 +30,7 @@
             height: 100%;
             top: 0%;
             left: 0%;
-            transform: rotate(54deg);
+            transform: rotate(45deg);
             /* we have 405 degrees, because our moon starts at -45º */
         }
 
@@ -79,7 +79,7 @@
     </div>
     <script>
         const watch = {};
-        let degrees = 10;
+        let degrees = 1;
         let timer;
         let active = false;
 
@@ -96,7 +96,7 @@
         watch.reset = () => {
             watch.stop();
             active = false;
-            degrees = 9;
+            degrees = 0;
             setArrowPosition();
         }
 
@@ -111,7 +111,7 @@
         }
 
         setArrowPosition = () => {
-            document.querySelector('.triangle-content').style.transform = `rotate(${degrees * 6}deg)`;
+            document.querySelector('.triangle-content').style.transform = `rotate(${(degrees * 6) + 45}deg)`;
             degrees++;
         } 
     </script>
